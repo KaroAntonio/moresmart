@@ -41,12 +41,25 @@
         });
         
         $('#post_button').click(function(){
-            post_text()
+            post_test()
         });
         
         function post_text() {
             var request = $.ajax({
               url: "/tests/endpoint",
+              type: "POST",
+              data: $('#input-box').val(),
+              dataType: "html"
+            });
+            request.done(function(data) {
+              console.log(data)
+            });   
+        }
+        
+	function post_test() {
+		console.log('post_test',$('#input-box').val())
+            var request = $.ajax({
+              url: "/post_test",
               type: "POST",
               data: $('#input-box').val(),
               dataType: "html"

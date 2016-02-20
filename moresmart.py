@@ -1,14 +1,17 @@
 import json
 from flask import Flask, request, url_for
+from flask.ext.sqlalchemy import SQLAlchemy
 
-# configuration
+#CONFIG
+#http://killtheyak.com/use-postgresql-with-django-flask/
 #DATABASE = 'static/fuzzywuzzy.db'
 DEBUG = True
+SQLALCHEMY_DATABASE_URI = "postgresql://yourusername:yourpassword@localhost/yournewdb"
 
 # create eur little application :)
 app = Flask(__name__, static_url_path='')
 app.config.from_object(__name__)
-
+db = SQLAlchemy(app)
 
 @app.route('/')
 def root():
@@ -18,18 +21,12 @@ def root():
 @app.route('/post_test', methods = ['POST'])
 def post_test():
     input_json = request.get_json(force=True)
-    return jsonify()  # back to a string to produce a proper response
+    return jsonify('success')  # back to a string to produce a proper response
 
 @app.route('/search/<string:query>/', methods=['GET'])
 def search(query):
-    notes = [
-        NoteMatch('There there.'),
-        NoteMatch('Where?'),
-        NoteMatch('ttt'),
-    ]
-
-    matches = [i for i in notes if i.findMatches(query)]
-    return json.dumps({'matches': noteMatchesToJson(matches)})
+	print(query)	
+	return json.dumps({'response': query})
 
 if __name__ == "__main__":
     app.run(debug=True)
