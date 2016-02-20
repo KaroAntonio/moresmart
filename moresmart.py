@@ -19,6 +19,9 @@ app.config.update(
 		  SECRET_KEY="secret",
 		    GOOGLE_LOGIN_REDIRECT_SCHEME="http",
 		    )
+
+
+
 app.config.update(
 		GOOGLE_LOGIN_REDIRECT_URIS='http://localhost:5000/login/google',
 		GOOGLE_LOGIN_CLIENT_ID='250698810056-6b02gvftla1ek0j0p343fdkrnn1l6afl.apps.googleusercontent.com',
@@ -29,7 +32,7 @@ app.config.update(
 google_login = GoogleLogin(app)
 
 #User Model
-class User(db.Model,UserMixin):
+class User(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     googleid = db.Column(db.String(64))
     lastname = db.Column(db.String(50))
@@ -40,8 +43,9 @@ class User(db.Model,UserMixin):
     pricemax = db.Column(db.Integer)
     email = db.Column(db.String(100), unique=True)
     password = db.Column(db.String(100))
+    active = db.Column(db.Integer)
 
-    def __init__(self, googleid, lastname, firstname, contactinfo, subjects, pricemin, pricemax, email, password):
+    def __init__(self, googleid, lastname, firstname, contactinfo, subjects, email, password, active = 0, pricemin=0, pricemax=2**10):
         self.googleid = googleid
         self.lastname = lastname
         self.firstname = firstname
@@ -51,6 +55,7 @@ class User(db.Model,UserMixin):
         self.pricemax = pricemax
         self.email = email
         self.password = password
+        self.active = active
 
     def __repr__(self):
         return '<User %r>' % self.email
@@ -59,9 +64,9 @@ class User(db.Model,UserMixin):
 # Subject Model
 class Subject(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    school = db.Column(db.String(64))
-    course = db.Column(db.String(64))
-    subject = db.Column(db.String(64))
+    school = db.Column(db.String(1024))
+    course = db.Column(db.String(1024))
+    subject = db.Column(db.String(1024))
 
     def __init__(self, school, course, subject):
         self.school = school
@@ -71,6 +76,13 @@ class Subject(db.Model):
     def __repr__(self):
         return '<User %r>' % self.course
 
+#add a bad test user
+def test_users(db):
+	db.drop_all()
+	db.create_all()
+	guest = User('gooid','guest','guesterson', 'guest@example.com','subjs','email','pwd')
+	db.session.add(guest)
+	db.session.commit()
 
 @app.route("/")
 def index():
@@ -82,6 +94,8 @@ def index():
 @google_login.login_success
 def login_success(token, profile):
 	print(profile)
+	if User.query.filter_by(username='admin').first() != "":
+		pass
 	return jsonify(token=token, profile=profile)
 
   #return (token,profile)
