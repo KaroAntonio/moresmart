@@ -18,10 +18,19 @@ def root():
 	#return "Hello"
     	return app.send_static_file('index.html')
 
-@app.route('/post_test', methods = ['POST'])
-def post_test():
-    input_json = request.get_json(force=True)
-    return jsonify('success')  # back to a string to produce a proper response
+@app.route('/post_test/', methods=['POST'])
+def add_entry():
+	input_text = request.get_data().decode("utf-8") 
+	print("DATA", input_text)
+	if not isinstance(input_text, str):
+		print('bad')	
+		return "bad"
+
+	#g.db.execute('insert into notes (text) values (?)', [input_text])
+	#g.db.commit()
+	#flash('New entry was successfully posted')
+	#return redirect(url_for('root'))
+	return "good"
 
 @app.route('/search/<string:query>/', methods=['GET'])
 def search(query):

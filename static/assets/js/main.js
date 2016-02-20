@@ -59,7 +59,7 @@
 	function post_test() {
 		console.log('post_test',$('#input-box').val())
             var request = $.ajax({
-              url: "/post_test",
+              url: "/post_test/",
               type: "POST",
               data: $('#input-box').val(),
               dataType: "html"
