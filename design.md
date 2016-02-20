@@ -4,7 +4,7 @@ MLDB.ai - ($1000)
 Nuance - API 4 NLP,   
 Smooch.io - API for text based transactions,   
 Breather - for help with Node.js
-Dottech - free dottech
+Dottech - free dottech *moresmart.tech*
 
 **Problem:** Students are the best at teaching students, they understand where they are coming from and can interface on the most identifyable lvl. TAs are bad at teaching, Tutors can be expensive and also don't often know the specific ideas that are needed for university specific courses. 
 
@@ -27,7 +27,9 @@ OR
 5. App Manages having requests out for 
 
 **Implementation**
-Flask Backend
+Flask Backend:  
+	API: 	Request {Class:,Subject:,Price:,Location:}
+			Logic 
 
 **Field Deployment**
 Demo with U of T.  
