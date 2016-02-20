@@ -26,10 +26,15 @@ OR
 4. teachers accept or decline requests
 5. App Manages having requests out for 
 
-**Implementation**
+**Implementation**  
 Flask Backend:  
 	API: 	Request {Class:,Subject:,Price:,Location:}
 			Logic 
+
+Smooch:  
+&nbsp;&nbsp;In order to register a number to a user to smooch, ask them to text a confirmation code to #, to validate UID  
+&nbsp;&nbsp;is not client 2 client, only business 2 client  
+&nbsp;&nbsp;Use smooch to text contact info for each user to each other (once teacher accepts)
 
 **Field Deployment**
 Demo with U of T.  
