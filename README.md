@@ -7,6 +7,8 @@ Tinder for tutoring. Get smart. More.
 	pip install Flask
 	pip install -U psycopg2
 	pip install Flask-SQLAlchemy
+	pip install Flask-Security
+	pip install Flask-OAuth2-Login
 	
 ### Run
 

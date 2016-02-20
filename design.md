@@ -36,6 +36,10 @@ Smooch:
 &nbsp;&nbsp;is not client 2 client, only business 2 client  
 &nbsp;&nbsp;Use smooch to text contact info for each user to each other (once teacher accepts)
 
+Google Oath Creds:
+
+{"web":{"client_id":"250698810056-6b02gvftla1ek0j0p343fdkrnn1l6afl.apps.googleusercontent.com","project_id":"moresmart-1227","auth_uri":"https://accounts.google.com/o/oauth2/auth","token_uri":"https://accounts.google.com/o/oauth2/token","auth_provider_x509_cert_url":"https://www.googleapis.com/oauth2/v1/certs","client_secret":"LkuC7lG8mVIsgQrzrDTDGVDC","redirect_uris":["http://localhost:5000"],"javascript_origins":["http://localhost:5000"]}}
+
 **Field Deployment**
 Demo with U of T.  
 Validation: Survey students as to whether this was more useful for students or if TAs were more useful.
