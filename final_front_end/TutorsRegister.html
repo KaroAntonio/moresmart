@@ -11,53 +11,53 @@
  	<body>
 
 	<div class="headertopofpage">
-			<div>More<span>Smart</span></div>
-		</div>
+		<div>More<span>Smart</span></div>
+	</div>
+
+
 
  	<table border="0">
-	 	<form>
+	 	<!-- <form>
 	 		<tr>
 	 		<td>
-	 		<input type="radio" name="tutor-tutee" value="Tutee" checked>
-	 		Tutee<br>
+	 		<div>
+		 		<input type="radio" name="tutor-tutee" id="tutee" value="Tutee" class="radio" checked/><label for="tutee">
+		 		Tutee</label>
+	 		</div>
 	 		</td>
+
+	 		<div>
 	 		<td>
-	 		<input type="radio" name="tutor-tutee" value="Tutor">Tutor
+		 		<input type="radio" name="tutor-tutee" id="tutor" value="Tutor" class="radio"><label for="tutor">
+		 		Tutor</label>
+	 		</div>
 	 		</td>
-	 	</form>
 	 	</td>
 	 	</tr>
-	 </table>
+	 	</form>
+	 </table> -->
 
+		<select name="school" id="select1"> 
 
- 	<table border="0">
-	 	<tr>
-	 		<td>
-		 	<select name="school" id="select1">	
+		</select>
 
-		 	</select>
-		 	</td>
-		 	<td>
-		 	<select name="dept" id="select2">
+		<select name="dept" id="select2">
 
-		 	</select>
-		 	</td>
-		 	<td>
-		 	<select name="course" id=select3>
-
-		 	</select>
-		 	</td>
-		 </tr>
+		</select>
+		
+		<select name="course" id="select3">
+			
+		</select>
 
  	</body>
 
- 	<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.3/jquery.min.js"></script>
+ 	<!-- <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/2.2/jquery.min.js"></script> -->
+ 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
  	<script type="text/javascript">
 
  	function make1 (){
- 		stuff = '{"school": ["McGill", "U of T"], "dept": ["Math", "Comp"], "course": ["250", "252", "206"]}';
+ 		stuff = '{"school": ["McGill", "U of T"], "department": ["Math", "Comp"], "course": ["Math 255", "Comp 252"]}';
  		stuff2 = JSON.parse(stuff);
- 		console.log(stuff2);
  		$.each(stuff2['school'], function(k,v){
  			$('#select1').append('<option value"' + v + '">' + v + '</option>');
  		});
@@ -65,24 +65,34 @@
  	make1();
 
  	function make2 (){
- 		stuff = '{"school": ["McGill", "U of T"], "dept": ["Math", "Comp"], "course": ["250", "252", "206"]}';
+ 		stuff = '{"school": ["McGill", "U of T"], "department": ["Math", "Comp"], "course": ["Math 255", "Comp 252"]}';
  		stuff2 = JSON.parse(stuff);
- 		console.log(stuff2);
- 		$.each(stuff2['dept'], function(k,v){
+ 		$.each(stuff2['department'], function(k,v){
  			$('#select2').append('<option value"' + v + '">' + v + '</option>');
  		});
  	};	
  	make2();
 
  	function make3 (){
- 		stuff = '{"school": ["McGill", "U of T"], "dept": ["Math", "Comp"], "course": ["250", "252", "206"]}';
+ 		$("#select3").empty();
+ 		console.log($('#select2'));	
+ 		stuff = '{"school": ["McGill", "U of T"], "department": ["Math", "Comp"], "course": ["Math 255", "Comp 252"]}';
  		stuff2 = JSON.parse(stuff);
- 		console.log(stuff2);
  		$.each(stuff2['course'], function(k,v){
- 			$('#select3').append('<option value"' + v + '">' + v + '</option>');
+ 			if (v.substring(0,4) == $('#select2').val()) {
+ 				$('#select3').append('<option value"' + v + '">' + v + '</option>');
+ 			}
  		});
  	};	
  	make3();
+
+ 	//$("#select2").change(make3());
+
+ 	$("#select2").on('change', function() {
+    	make3();
+	});
+
+ 	
 
  	</script>
  	

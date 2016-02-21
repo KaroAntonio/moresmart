@@ -13,4 +13,6 @@ def populate_db(db):
         db.session.add(sub)
     db.session.commit()
 
-        
+if __name__ == '__main__':
+	from moresmart import db
+	populate_db(db)
