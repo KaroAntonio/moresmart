@@ -95,6 +95,11 @@
  		strCourse = $('#select3').val();
  		stuff = ('{"school": ["' + strSchool + '"], "department": ["' + strDept + '"], "course": ["' + strCourse + '"]}');
  		alert(stuff);
+ 		money = $('#tfield').val();
+ 		if (money == 0){
+ 			money = 20;
+ 		}
+ 		alert(money);
  	}
 
  	</script>
