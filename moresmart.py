@@ -140,6 +140,17 @@ def add_entry():
 	#return redirect(url_for('root'))
 	return "good"
 
+@app.route('/post_number/', methods=['POST'])
+@login_required
+def send_number_validation():
+	input_text = request.get_data().decode("utf-8") 
+	print("DATA", input_text)
+	if not isinstance(input_text, str):
+		print('bad')	
+		return "bad"
+    #USE SMOOCH TO TEXT TO NUMBER
+	return "good"
+
 @app.route('/search/<string:query>/', methods=['GET'])
 @login_required
 def search(query):
