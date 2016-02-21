@@ -27,6 +27,25 @@ body{
 	color: #5379fa !important;
 }
 
+.headertopofpage{
+	position: absolute;
+	top: calc(10% - 35px);
+	left: calc(50% - 255px);
+	z-index: 2;
+}
+
+.headertopofpage div{
+	float: left;
+	color: #fff;
+	font-family: 'Exo', sans-serif;
+	font-size: 40px;
+	font-weight: 200;
+}
+
+.headertopofpage div span{
+	color: #5379fa !important;
+}
+
 .login{
 	position: absolute;
 	top: calc(50% - 75px);
