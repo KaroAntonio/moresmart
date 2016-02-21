@@ -10,6 +10,7 @@ Tinder for tutoring. Get smart. More.
 	pip install Flask-Security
 	pip install Flask-OAuth2-Login
 	pip install requests
+	pip install --upgrade requests
 	pip install twilio
 	
 	python3 populate.py
