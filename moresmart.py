@@ -80,10 +80,13 @@ class Subject(db.Model):
 
 @app.route("/")
 def index():
+    return app.send_static_file('landing.html')
+'''
   return """
 <html>
 <a href="{}">Login with Google</a>
 """.format(google_login.authorization_url())
+'''
 
 @login_manager.user_loader
 def load_user(userid):
@@ -125,6 +128,17 @@ def more_info():
 @login_required
 def request_page():
 	return "Make a Request"
+
+@app.route('/get_google/', methods=['GET'])
+def get_google():
+	return google_login.authorization_url()
+
+@app.route('/request/<string:data>/', methods=['GET'])
+@login_required
+def request_data(data):
+    #price, course details [school, course, subject]
+    #{'price':123,'school':'plebs4lyfe','course':'asd','subject':'asd'}
+	return data
 
 @app.route('/post_test/', methods=['POST'])
 @login_required
