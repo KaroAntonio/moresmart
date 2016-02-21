@@ -203,7 +203,7 @@ body.is-loading * {
 
 input, textarea, select {
 		font-family: 'Source Sans Pro', sans-serif;
-		font-size: 18pt;
+		font-size: 16pt;
 		text-align: center;
 		line-height: 1.75em;
 		font-weight: 300;
@@ -299,3 +299,25 @@ input.radio:checked ~ label {
 	left: calc(100% / 2 - 30px);
 	z-index: 2;
 }
+
+#tfield {
+	width: 2cm;
+}
+
+#btn {
+	font-weight: 14px;
+}
+
+
+
+table#tbl {
+	position: absolute; 
+	width:20%;
+	 
+    margin-left:42%; 
+    margin-right:38%;
+    bottom: calc(25%);
+     
+}
+
+
