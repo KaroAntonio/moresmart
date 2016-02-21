@@ -1,10 +1,11 @@
-import json, os
+import json, os, ast
 from flask import Flask, request, url_for, jsonify,redirect
 from flask.ext.login import LoginManager, UserMixin, login_user, login_required, current_user
 from flask.ext.sqlalchemy import SQLAlchemy
 from flask_oauth2_login import GoogleLogin
 import requests
 from twilio.rest import TwilioRestClient
+#from dbMethods import userAdditional
 
 #CONFIG
 #http://killtheyak.com/use-postgresql-with-django-flask/
@@ -78,6 +79,83 @@ class Subject(db.Model):
 
     def __repr__(self):
         return '<User %r>' % self.course
+    
+#DBMETHODS
+#Wrapper, String to JSON
+def toJSON(string):
+    return json.loads(string)
+
+#wrapper, json to string
+def toString(JSON):
+    return json.dumps(JSON)
+
+#returns all courses as a dict, pass in the query
+def returnAllCourses(courses):
+    dict = {"school":[], "department":[],"course":[]}
+    for item in courses:
+        dict["school"].append(item.school)
+        dict["department"].append(item.department)
+        dict["course"].append(item.course)
+
+        #Sorts dict
+        dict["schools"] = dict["schools"].sort()
+        dict["deparment"] = dict["department"].sort()
+        dict["course"] = dict["course"].sort()
+    return json.dumps(dict)
+
+
+def queryResponse(query_classes):
+    query_id = queryCourse(query_classes)[0].id
+    price = query_classes["price"]
+    
+    query_tutor = {"id":query_id,"maxprice":price}
+    return queryTutor(query_tutor)
+
+#conditions should be a dict, no arrays inside, returns result.
+def queryCourse(query):
+    # structure of query might change
+     #right  now ,we treat query as a json/dict
+    if 'school' not in query:
+        school = 'McGill'
+    else:
+        school = query['school']
+    course = query['course']
+    
+
+    result = db.session.query(Subject).filter(Subject.course == course, Subject.school == school)
+    return result
+#we need to process query after we receieve, and after we get id
+
+
+#query should be a dict containing price and id, no arrays, again.
+def queryTutor(query):
+    id = query["id"]
+    maxprice = query["maxprice"]
+    tutors = db.session.query(User).filter(User.pricemin <= maxprice).all()
+    finalResult = []
+    print(tutors[0].subjects)
+    for tutor in tutors:
+        subjects = tutor.subjects
+        subjectsDict = json.loads(subjects)
+        if subjectDict != "":
+            courses = subjectsDict["subjects"]
+            for i in courses:
+                if str(i) ==  str(id):
+                    finalResult.append(tutor)
+    return finalResult
+
+def userAdditional(cur_user, additional_info):
+    user = User.query.filter_by(id=cur_user.id).all()[0]
+    email = user.email
+    print(additional_info)
+    parsed_additional_info = ast.literal_eval(additional_info)
+    #parsed_additional_info = json.loads(additional_info)
+    user = User.query.filter_by(email=str(email)).all()[0]
+    user.pricemin = int(parsed_additional_info["price"])
+    user.subjects = str(parsed_additional_info["subjects"])
+    user.contactinfo = str(parsed_additional_info["number"])
+    #user.smooch = str(parsed_additional_info["smooch"])
+    db.session.commit()
 
 @app.route("/")
 def index():
@@ -85,7 +163,11 @@ def index():
 
 @login_manager.user_loader
 def load_user(userid):
-    return User.query.filter_by(id=userid).all()[0]
+    users = User.query.filter_by(id=userid).all();
+    if len(users) !=  0:
+        return users[0]
+    else:
+        return None;
 
 @google_login.login_success
 def login_success(token, profile):
@@ -149,6 +231,25 @@ def smooch_hook():
     text = json.loads(data)['messages'][0]['text']
     #check if author is validated, if no, compare text to validation key,
     #else check if it is  a request
+    
+    #if they send back key
+    if text == "123asdf567":
+        uid = '276a6f7c7608a4e341b1cdfd'
+        text = 'Verified'
+        post_smooch(uid,text)
+        return "Make a Request"
+    
+    if 'help' in text:
+        #assume in form 'help MAT234 20'
+        parts = text.split()
+        qc = {}
+        qc['price'] = int(parts[-1])
+        qc['course'] = parts[1]
+        qc['school'] = 'McGill'
+        print(qc)
+        tutors = queryResponse(qc)
+        print(tutors)
+    
     return text
 
 def post_smooch(uid,text):
@@ -174,13 +275,17 @@ def post_twilio(num,text):
 @app.route('/post_info/', methods=['POST'])
 @login_required
 def send_number_validation():
-    input_text = request.get_data().decode("utf-8") 
-    print("DATA", input_text)
-    print(current_user)
-    if not isinstance(input_text, str):
+    data = request.get_data().decode("utf-8") 
+    if not isinstance(data, str):
         print('bad')	
         return "bad"
+    print(data)
     #USE SMOOCH TO TEXT TO NUMBER
+    userAdditional(current_user, data)
+    #Hardcode UID
+    uid = '276a6f7c7608a4e341b1cdfd'
+    text = 'please respond to this text with the verification key'
+    post_smooch(uid,text)
     return "good"
 
 @app.route('/search/<string:query>/', methods=['GET'])

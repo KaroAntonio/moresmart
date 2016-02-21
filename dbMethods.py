@@ -1,9 +1,9 @@
 # Python module for database functions.
 import json
 import ast
+from moresmart import User, Subject
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
-from moresmart import User, Subject
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:////tmp/test.db'
 db = SQLAlchemy(app)

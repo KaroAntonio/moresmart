@@ -3,7 +3,7 @@ from moresmart import User, Subject
 def populate_db(db):
     db.drop_all()
     db.create_all()
-    guest = User('gooid','guest','guesterson','contact','stats' ,'subjs',0,'email','pwd')
+    guest = User('gooid','guest','guesterson','contact','stats' ,'[]',0,'email','pwd')
     db.session.add(guest)
     db.session.commit()	
 

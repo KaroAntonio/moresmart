@@ -2,7 +2,12 @@ $('#submit-info').click(function(){
 	submit_info()
 });
 
+$('#key-field').css('display','none')
+
 subjects = [];
+
+$('#request-button').click(function() {
+    window.location = '/request_page'})
 
 $('#add_subject_button').click(function(){
     subj = [$( "#options-1" ).val(),$( "#options-2" ).val(),$( "#options-3" ).val()];
@@ -44,17 +49,19 @@ function submit_info() {
         'price': $('#input-price').val(),
         'subjects': subjects,
     }
+    console.log(JSON.stringify(info))
     var request = $.ajax({
       url: "/post_info/",
       type: "POST",
-      data: info,
+      data: JSON.stringify(info),
       dataType: "html"
     });
     request.done(function(data) {
       console.log(data)
         //give notification that the number is sent
       $('#input-fields').css('display','none')
-      $('#key-field').html('<b>TEXT KEY: 123asdf567 to {#####}</b>')
+      $('#key-field').css('display','inline-block')
+      //$('#key-field').html('<b>TEXT KEY: 123asdf567 to +14387937578</b>')
     });
 }
 
