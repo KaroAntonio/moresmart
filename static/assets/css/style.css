@@ -29,7 +29,7 @@
 	color: #fff;
 	font-family: 'Exo', sans-serif;
 	font-size: 40px;
-	font-weight: 200;
+	font-weight: 375;
 }
 
 .headertopofpage div span{
@@ -48,7 +48,7 @@
 	color: #fff;
 	font-family: 'Exo', sans-serif;
 	font-size: 40px;
-	font-weight: 200;
+	font-weight: 375;
 }
 
 .headerSlogan div span{
@@ -160,7 +160,7 @@
 
 body {
 	background-color: #183026;
-	background-image:  url("../../static/images/bg.jpg");
+	background-image:  url("../../images/bg.jpg");
 	background-repeat: repeat, no-repeat;
 	background-size: auto, cover;
 	background-position: top left, center 0;
@@ -193,10 +193,10 @@ body.is-loading * {
 
 input, textarea, select {
 		font-family: 'Source Sans Pro', sans-serif;
-		font-size: 16pt;
+		font-size: 14pt;
 		text-align: center;
 		line-height: 1.75em;
-		font-weight: 300;
+		font-weight: 500;
 		opacity: 0.8;
 		letter-spacing: 1px;
 		color: #3a3939;
@@ -320,6 +320,6 @@ table#tbl {
 	text-align: center;
 	color: #fff;
 	font-family: 'Exo', sans-serif;
-	font-size: 15px;
-	font-weight: 100;
+	font-size: 18px;
+	font-weight: 300;
 }

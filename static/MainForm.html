@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    
+    <title>More Smart - Tutor Registration</title>
+
+    <link type="text/css" rel="stylesheet" href="assets/css/style.css"/> 
+  	</head>
+
+ 	<body>
+
+	<div class="headertopofpage">
+		<div>More<span>Smart</span></div>
+	</div>
+
+	<div class="headerSlogan">
+		<div>Let us make you More<span>Smart</span>!</div>
+	</div>
+
+
+		<select name="school" id="select1"> 
+
+		</select>
+
+		<select name="dept" id="select2">
+
+		</select>
+		
+		<select name="course" id="select3">
+			
+		</select>
+
+
+		<table border="0" id="tbl">
+		<tr>
+		<div class="headerPrice">
+			<div>Price:</div>
+		</div>
+		<!--'return ((event.charCode >= 48  && event.charCode <= 57) || event.charCode == 0)'/>-->
+		<td>
+			<input type="text" id="tfield" placeholder="20" onkeypress='return ((event.charCode >= 48  && event.charCode <= 57) || event.charCode == 0)'/>
+
+
+			<input type="button" id="btn" value="Submit">
+		</td>
+		</tr>
+		</table>
+
+
+ 	</body>
+
+ 	<!-- <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/2.2/jquery.min.js"></script> -->
+ 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
+ 	<script type="text/javascript">
+
+ 	function make1 (){
+ 		stuff = '{"school": ["McGill", "U of T"], "department": ["Math", "Comp"], "course": ["Math 255", "Comp 252"]}';
+ 		stuff2 = JSON.parse(stuff);
+ 		$.each(stuff2['school'], function(k,v){
+ 			$('#select1').append('<option value"' + v + '">' + v + '</option>');
+ 		});
+ 	};	
+ 	make1();
+
+ 	function make2 (){
+ 		stuff = '{"school": ["McGill", "U of T"], "department": ["Math", "Comp"], "course": ["Math 255", "Comp 252"]}';
+ 		stuff2 = JSON.parse(stuff);
+ 		$.each(stuff2['department'], function(k,v){
+ 			$('#select2').append('<option value"' + v + '">' + v + '</option>');
+ 		});
+ 	};	
+ 	make2();
+
+ 	function make3 (){
+ 		$("#select3").empty();
+ 		console.log($('#select2'));	
+ 		stuff = '{"school": ["McGill", "U of T"], "department": ["Math", "Comp"], "course": ["Math 255", "Comp 252"]}';
+ 		stuff2 = JSON.parse(stuff);
+ 		$.each(stuff2['course'], function(k,v){
+ 			if (v.substring(0,4) == $('#select2').val()) {
+ 				$('#select3').append('<option value"' + v + '">' + v + '</option>');
+ 			}
+ 		});
+ 	};	
+ 	make3();
+
+ 	$("#select2").on('change', function() {
+    	make3();
+	});
+
+ 	btn.onclick=function(){
+ 		strSchool = $('#select1').val();
+ 		strDept = $('#select2').val();
+ 		strCourse = $('#select3').val();
+ 		stuff = ('{"school": ["' + strSchool + '"], "department": ["' + strDept + '"], "course": ["' + strCourse + '"]}');
+ 		alert(stuff);
+ 		money = $('#tfield').val();
+ 		if (money <= 0){
+ 			money = 20;
+ 		}
+ 		alert(money);
+ 	}
+
+ 	</script>
+ 	
+		    
+	
+
+</html>
