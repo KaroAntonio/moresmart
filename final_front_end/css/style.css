@@ -160,7 +160,7 @@
 
 body {
 	background-color: #183026;
-	background-image:  url("/home/mathew/Documents/moresmart/moresmart/static/images/bg.jpg");
+	background-image:  url("../../static/images/bg.jpg");
 	background-repeat: repeat, no-repeat;
 	background-size: auto, cover;
 	background-position: top left, center 0;
