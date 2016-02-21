@@ -91,17 +91,16 @@ def toString(JSON):
 
 #returns all courses as a dict, pass in the query
 def returnAllCourses(courses):
-    dict = {"school":[], "department":[],"course":[]}
+    d = {"school":[], "department":[],"course":[]}
     for item in courses:
-        dict["school"].append(item.school)
-        dict["department"].append(item.department)
-        dict["course"].append(item.course)
-
-        #Sorts dict
-        dict["schools"] = dict["schools"].sort()
-        dict["deparment"] = dict["department"].sort()
-        dict["course"] = dict["course"].sort()
-    return json.dumps(dict)
+        d["school"].append(item.school)
+        d["department"].append(item.department)
+        d["course"].append(item.course)
+    #Sorts dict
+    d["school"].sort()
+    d["department"].sort()
+    d["course"].sort()
+    return json.dumps(d)
 
 
 def queryResponse(query_classes):
@@ -137,7 +136,7 @@ def queryTutor(query):
     for tutor in tutors:
         subjects = tutor.subjects
         subjectsDict = json.loads(subjects)
-        if subjectDict != "":
+        if len(subjectsDict) != 0:
             courses = subjectsDict["subjects"]
             for i in courses:
                 if str(i) ==  str(id):
@@ -208,7 +207,13 @@ def get_google():
 def request_data(data):
     #price, course details [school, course, subject]
     #{'price':123,'school':'plebs4lyfe','course':'asd','subject':'asd'}
+    
 	return data
+
+@app.route('/all_courses/', methods=['GET'])
+@login_required
+def all_courses():
+	return returnAllCourses(Subject.query.all())
 
 @app.route('/post_test/', methods=['POST'])
 @login_required
