@@ -11,43 +11,43 @@
  	<body>
 
 	<div class="headertopofpage">
-			<div>More<span>Smart</span></div>
-		</div>
+		<div>More<span>Smart</span></div>
+	</div>
+
+
 
  	<table border="0">
-	 	<form>
+	 	<!-- <form>
 	 		<tr>
 	 		<td>
-	 		<input type="radio" name="tutor-tutee" value="Tutee" checked>
-	 		Tutee<br>
+	 		<div>
+		 		<input type="radio" name="tutor-tutee" id="tutee" value="Tutee" class="radio" checked/><label for="tutee">
+		 		Tutee</label>
+	 		</div>
 	 		</td>
+
+	 		<div>
 	 		<td>
-	 		<input type="radio" name="tutor-tutee" value="Tutor">Tutor
+		 		<input type="radio" name="tutor-tutee" id="tutor" value="Tutor" class="radio"><label for="tutor">
+		 		Tutor</label>
+	 		</div>
 	 		</td>
-	 	</form>
 	 	</td>
 	 	</tr>
-	 </table>
+	 	</form>
+	 </table> -->
 
+		<select name="school" id="select1"> 
 
- 	<table border="0">
-	 	<tr>
-	 		<td>
-		 	<select name="school" id="select1">	
+		</select>
 
-		 	</select>
-		 	</td>
-		 	<td>
-		 	<select name="dept" id="select2">
+		<select name="dept" id="select2">
 
-		 	</select>
-		 	</td>
-		 	<td>
-		 	<select name="course" id="select3">	
-
-		 	</select>
-		 	</td>
-		 </tr>
+		</select>
+		
+		<select name="course" id="select3">
+			
+		</select>
 
  	</body>
 
@@ -79,10 +79,6 @@
  		stuff = '{"school": ["McGill", "U of T"], "department": ["Math", "Comp"], "course": ["Math 255", "Comp 252"]}';
  		stuff2 = JSON.parse(stuff);
  		$.each(stuff2['course'], function(k,v){
- 			/*console.log(v);*/
- 			console.log($('#select2').val());
- 			console.log(v.substring(0,4));
- 			/*console.log(v.substring() == $('$select2').val());*/
  			if (v.substring(0,4) == $('#select2').val()) {
  				$('#select3').append('<option value"' + v + '">' + v + '</option>');
  			}
