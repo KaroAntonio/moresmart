@@ -196,7 +196,7 @@ def more_info():
 @app.route('/request_page')
 @login_required
 def request_page():
-	return "Make a Request"
+	return app.send_static_file('request.html')
 
 @app.route('/get_google/', methods=['GET'])
 def get_google():
@@ -207,8 +207,27 @@ def get_google():
 def request_data(data):
     #price, course details [school, course, subject]
     #{'price':123,'school':'plebs4lyfe','course':'asd','subject':'asd'}
-    
 	return data
+
+@app.route('/request_tutor/', methods=['POST'])
+@login_required
+def request_tutor():
+    data = request.get_data().decode("utf-8") 
+    if not isinstance(data, str):
+        print('bad')	
+        return "bad"
+    parsed = json.loads(data)
+    tutors = queryResponse(parsed)
+    if len(tutors) != 0:
+            for tutor in tutors:
+                #message offer to each tutor
+                #all tutors are the same (bc twilio)
+                #future use smooch id to query users
+                username  = 'Steven'
+                uid = '276a6f7c7608a4e341b1cdfd'
+                text = 'You have a tutoring request from '+username+' for ' + parsed["course"] + ', $'+str(parsed['price']+'. #: 5142605628 ')
+                post_smooch(uid,text)
+    return "good"
 
 @app.route('/all_courses/', methods=['GET'])
 @login_required
@@ -253,8 +272,15 @@ def smooch_hook():
         qc['school'] = 'McGill'
         print(qc)
         tutors = queryResponse(qc)
-        print(tutors)
-    
+        if len(tutors) != 0:
+            for tutor in tutors:
+                #message offer to each tutor
+                #all tutors are the same (bc twilio)
+                #future use smooch id to query users
+                username  = 'Steven'
+                uid = '276a6f7c7608a4e341b1cdfd'
+                text = 'You have a tutoring request from '+username+' for ' + qc["course"] + ', $'+str(qc['price']+'. #: 5142605628 ')
+                post_smooch(uid,text)
     return text
 
 def post_smooch(uid,text):
