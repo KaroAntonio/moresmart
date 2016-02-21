@@ -28,14 +28,14 @@
 }
 
 .headertopofpage{
-	position: absolute;
-	top: calc(10% - 35px);
-	left: calc(50% - 255px);
+	position: relative;
+	top: calc(75px);
+	text-align: center;
 	z-index: 2;
 }
 
 .headertopofpage div{
-	float: left;
+	text-align: center;
 	color: #fff;
 	font-family: 'Exo', sans-serif;
 	font-size: 40px;
@@ -43,6 +43,25 @@
 }
 
 .headertopofpage div span{
+	color: #5379fa !important;
+}
+
+.headerSlogan{
+	text-align: center;
+	position: relative;
+	top: calc(475px);
+	z-index: 2;
+}
+
+.headerSlogan div{
+	text-align: center;
+	color: #fff;
+	font-family: 'Exo', sans-serif;
+	font-size: 40px;
+	font-weight: 200;
+}
+
+.headerSlogan div span{
 	color: #5379fa !important;
 }
 
@@ -185,6 +204,7 @@ body.is-loading * {
 input, textarea, select {
 		font-family: 'Source Sans Pro', sans-serif;
 		font-size: 18pt;
+		text-align: center;
 		line-height: 1.75em;
 		font-weight: 300;
 		opacity: 0.8;
@@ -255,32 +275,27 @@ input.radio:checked ~ label {
 
 #select1 {
 	font-family: 'Source Sans Pro', sans-serif;
-	margin-right: 1cm;
-	position: absolute;
+	position: relative;	
 	width: 4cm;
-	top: calc(50% - 35px);
-	/*left: calc(50% - 255px);*/
+	top: calc(150px);
+	left: calc(100% / 6 + 10px);
 	z-index: 2;
 }
 
+#select2 {
+	font-family: 'Source Sans Pro', sans-serif;
+	position: relative;	
+	width: 4cm;
+	top: calc(150px);
+	left: calc(100% / 3 - 5px);
+	z-index: 2;
+}
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+#select3 {
+	font-family: 'Source Sans Pro', sans-serif;
+	position: relative;	
+	width: 4cm;
+	top: calc(150px);
+	left: calc(100% / 2 - 15px);
+	z-index: 2;
+}
