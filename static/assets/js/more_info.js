@@ -12,5 +12,6 @@ function submit_number() {
     });
     request.done(function(data) {
       console.log(data)
+        //give notification that the number is sent
     });
 }

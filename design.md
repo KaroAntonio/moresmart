@@ -35,7 +35,7 @@ Smooch:
 &nbsp;&nbsp;In order to register a number to a user to smooch, ask them to text a confirmation code to #, to validate UID  
 &nbsp;&nbsp;is not client 2 client, only business 2 client  
 &nbsp;&nbsp;Use smooch to text contact info for each user to each other (once teacher accepts)  
-&nbsp;&nbsp;**VALIDATION**SMOOCH->#, #-> Server, validated
+&nbsp;&nbsp;**VALIDATION**SMOOCH->#, #-> Server, validated, continue to Request page
 
 Google Oath Creds:
 
