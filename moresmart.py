@@ -81,12 +81,6 @@ class Subject(db.Model):
 @app.route("/")
 def index():
     return app.send_static_file('landing.html')
-'''
-  return """
-<html>
-<a href="{}">Login with Google</a>
-""".format(google_login.authorization_url())
-'''
 
 @login_manager.user_loader
 def load_user(userid):
@@ -111,13 +105,6 @@ def login_success(token, profile):
 @google_login.login_failure
 def login_failure(e):
   return str(e)
-
-'''
-@app.route('/')
-def root():
-	#return "Hello"
-    	return app.send_static_file('index.html')
-    	'''
 
 @app.route('/more_info')
 @login_required
