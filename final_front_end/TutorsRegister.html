@@ -2,46 +2,75 @@
 <html >
   <head>
     <meta charset="UTF-8">
+    
     <title>More Smart - Tutor Registration</title>
-    
-    
-    <link type="text/css" rel="stylesheet" href="css/style.css"/>
-  
-  	<script src="js/prefixfree.min.js"></script>
-    
-	</head>
 
+    <!-- <link type="text/css" rel="stylesheet" href="css/style.css"/> -->
+  	</head>
 
  	<body>
+ 	<!-- <div class="body"></div> 
+ 	<div class="grad"></div> -->
 
 
- 		<div class="header">
- 			<form>
- 				<input type="checkbox" name="math" value="on">MATH<br>
- 				<input type="checkbox" name="comp" value="on">COMP<br>
- 				<input type="checkbox" name="phys" value="on">PHYS<br>
- 				<input type="checkbox" name="biol" value="on">BIOL<br>
- 				<input type="checkbox" name="chem" value="on">CHEM<br>
- 				<input type="checkbox" name="ecse" value="on">ECSE<br>
- 				<input type="checkbox" name="mech" value="on">MECH<br>
- 				<input type="checkbox" name="chee" value="on">CHEE<br>
- 			</form>
- 		</div>
+ 	<table border="0">
+ 	
+ 	<tr>
+ 		<td>
+	 	<select name="school" id="select1">	
 
+	 	</select>
+	 	</td>
+	 	<td>
+	 	<select name="dept" id="select2">
 
+	 	</select>
+	 	</td>
+	 	<td>
+	 	<select name="course" id=select3>
 
-	    <div class="body"></div>
-			<div class="grad"></div>
-			<div class="header">
-			
-			</div>
-		<br>
-			
-	    <script src='http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
+	 	</select>
+	 	</td>
+	 </tr>
 
-	    
-	    
-	    
-	    
-	</body>
+ 	</body>
+
+ 	<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.3/jquery.min.js"></script>
+ 	<script type="text/javascript">
+
+ 	function make1 (){
+ 		stuff = '{"school": ["McGill", "U of T"], "dept": ["Math", "Comp"], "course": ["250", "252", "206"]}';
+ 		stuff2 = JSON.parse(stuff);
+ 		console.log(stuff2);
+ 		$.each(stuff2['school'], function(k,v){
+ 			$('#select1').append('<option value"' + v + '">' + v + '</option>');
+ 		});
+ 	};	
+ 	make1();
+
+ 	function make2 (){
+ 		stuff = '{"school": ["McGill", "U of T"], "dept": ["Math", "Comp"], "course": ["250", "252", "206"]}';
+ 		stuff2 = JSON.parse(stuff);
+ 		console.log(stuff2);
+ 		$.each(stuff2['dept'], function(k,v){
+ 			$('#select2').append('<option value"' + v + '">' + v + '</option>');
+ 		});
+ 	};	
+ 	make2();
+
+ 	function make3 (){
+ 		stuff = '{"school": ["McGill", "U of T"], "dept": ["Math", "Comp"], "course": ["250", "252", "206"]}';
+ 		stuff2 = JSON.parse(stuff);
+ 		console.log(stuff2);
+ 		$.each(stuff2['course'], function(k,v){
+ 			$('#select3').append('<option value"' + v + '">' + v + '</option>');
+ 		});
+ 	};	
+ 	make3();
+
+ 	</script>
+ 	
+		    
+	
+
 </html>
