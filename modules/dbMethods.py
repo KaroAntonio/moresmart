@@ -41,7 +41,7 @@ def queryResponse(query_classes):
 #conditions should be a dict, no arrays inside, returns result.
 def queryCourse(query):
     # structure of query might change
-    #right  now ,we treat query as a json/dict
+     #right  now ,we treat query as a json/dict
     school = query['school']
     course = query['course']
 
@@ -64,3 +64,13 @@ def queryTutor(query):
             if str(i) ==  str(id):
                 finalResult.append(item)
     return finalResult
+
+def userAdditional(user, additional_info):
+    email = user.email
+    parsed_additional_info = ast.literal_eval(additional_info)
+    user = User.query.filter_by(email == str(email))
+    user.pricemin = int(additional_info["price"])
+    user.subjects = str(parsed_additional_info["subjects"])
+    user.contactinfo = str(parsed_additional_info["phone"])
+    #user.smooch = str(parsed_additional_info["smooch"])
+    db.session.commit()
