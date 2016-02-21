@@ -45,7 +45,7 @@ function submit_info() {
         'subjects': subjects,
     }
     var request = $.ajax({
-      url: "/post_number/",
+      url: "/post_info/",
       type: "POST",
       data: info,
       dataType: "html"
@@ -54,6 +54,12 @@ function submit_info() {
       console.log(data)
         //give notification that the number is sent
       $('#input-fields').css('display','none')
-      $('#key-field').html('<b>KEY: 123asdf567</b>')
+      $('#key-field').html('<b>TEXT KEY: 123asdf567 to {#####}</b>')
     });
 }
+
+
+
+
+
+

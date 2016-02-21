@@ -1,8 +1,10 @@
 import json, os
 from flask import Flask, request, url_for, jsonify,redirect
-from flask.ext.login import LoginManager, UserMixin, login_user, login_required
+from flask.ext.login import LoginManager, UserMixin, login_user, login_required, current_user
 from flask.ext.sqlalchemy import SQLAlchemy
 from flask_oauth2_login import GoogleLogin
+import requests
+from twilio.rest import TwilioRestClient
 
 #CONFIG
 #http://killtheyak.com/use-postgresql-with-django-flask/
@@ -140,16 +142,46 @@ def add_entry():
 	#return redirect(url_for('root'))
 	return "good"
 
-@app.route('/post_number/', methods=['POST'])
+@app.route('/smooch-hook/', methods=['POST'])
+def smooch_hook():
+    data = request.get_data().decode("utf-8")
+    print(data)
+    text = json.loads(data)['messages'][0]['text']
+    #check if author is validated, if no, compare text to validation key,
+    #else check if it is  a request
+    return text
+
+def post_smooch(uid,text):
+    url = 'https://api.smooch.io/v1/appusers/'+uid+'/conversation/messages'
+    payload = {'text':text,'role':'appMaker'}
+    headers = {'content-type':'application/json','authorization': 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiIsImtpZCI6IjU2YzkwZTAzOTMzYmNjMmEwMGU4ZTFkYSJ9.eyJzY29wZSI6ImFwcCJ9._CfWALWAilTQxyGlfeSpFR1xOvcUrDIxQV3yv08Xeo8'}
+    r = requests.post(url, json=payload, headers=headers)
+    return r
+
+def post_twilio(num,text):
+    # put your own credentials here 
+    ACCOUNT_SID = "AC34a2bfb497e4a8f51be5b4396e89e327" 
+    AUTH_TOKEN = "c4335ee027bf3a7de7a3a24ac59f0d9c" 
+
+    client = TwilioRestClient(ACCOUNT_SID, AUTH_TOKEN) 
+
+    client.messages.create(
+        to=num, 
+        from_="+14387937578", 
+        body=text, 
+    )
+
+@app.route('/post_info/', methods=['POST'])
 @login_required
 def send_number_validation():
-	input_text = request.get_data().decode("utf-8") 
-	print("DATA", input_text)
-	if not isinstance(input_text, str):
-		print('bad')	
-		return "bad"
+    input_text = request.get_data().decode("utf-8") 
+    print("DATA", input_text)
+    print(current_user)
+    if not isinstance(input_text, str):
+        print('bad')	
+        return "bad"
     #USE SMOOCH TO TEXT TO NUMBER
-	return "good"
+    return "good"
 
 @app.route('/search/<string:query>/', methods=['GET'])
 @login_required
