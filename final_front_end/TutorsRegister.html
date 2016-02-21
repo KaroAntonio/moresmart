@@ -34,8 +34,12 @@
 
 		<table border="0" id="tbl">
 		<tr>
+		<div class="headerPrice">
+			<div>Price:</div>
+		</div>
 		<td>
 			<input type="text" id="tfield" placeholder="20" onkeypress='return (((event.charCode >= 48 && event.charCode <= 57') || event.charCode == 8) || event.charCode == 9094)>
+
 
 			<input type="button" id="btn" value="Submit">
 		</td>
@@ -84,6 +88,15 @@
  	$("#select2").on('change', function() {
     	make3();
 	});
+
+ 	btn.onclick=function(){
+ 		strSchool = $('#select1').val();
+ 		strDept = $('#select2').val();
+ 		strCourse = $('#select3').val();
+ 		stuff = ('{"school": ["' + strSchool + '"], "department": ["' + strDept + '"], "course": ["' + strCourse + '"]}');
+ 		alert(stuff);
+ 	}
+ 	
 
  	
 
