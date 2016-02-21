@@ -1,6 +1,6 @@
 import json, os
-from flask import Flask, request, url_for, jsonify
-from flask.ext.login import LoginManager, UserMixin
+from flask import Flask, request, url_for, jsonify,redirect
+from flask.ext.login import LoginManager, UserMixin, login_user, login_required
 from flask.ext.sqlalchemy import SQLAlchemy
 from flask_oauth2_login import GoogleLogin
 
@@ -14,6 +14,8 @@ SQLALCHEMY_DATABASE_URI = 'sqlite:////tmp/test.db'
 # create eur little application :)
 app = Flask(__name__, static_url_path='')
 app.config.from_object(__name__)
+login_manager = LoginManager()
+login_manager.init_app(app)
 db = SQLAlchemy(app)
 app.config.update(
 		  SECRET_KEY="secret",
@@ -32,7 +34,7 @@ app.config.update(
 google_login = GoogleLogin(app)
 
 #User Model
-class User(db.Model):
+class User(db.Model,UserMixin):
     id = db.Column(db.Integer, primary_key=True)
     googleid = db.Column(db.String(64))
     lastname = db.Column(db.String(50))
@@ -76,14 +78,6 @@ class Subject(db.Model):
     def __repr__(self):
         return '<User %r>' % self.course
 
-#add a bad test user
-def test_users(db):
-	db.drop_all()
-	db.create_all()
-	guest = User('gooid','guest','guesterson', 'guest@example.com','subjs','email','pwd')
-	db.session.add(guest)
-	db.session.commit()
-
 @app.route("/")
 def index():
   return """
@@ -91,14 +85,25 @@ def index():
 <a href="{}">Login with Google</a>
 """.format(google_login.authorization_url())
 
+@login_manager.user_loader
+def load_user(userid):
+    return User.query.filter_by(id=userid).all()[0]
+
 @google_login.login_success
 def login_success(token, profile):
 	print(profile)
-	if User.query.filter_by(username='admin').first() != "":
-		pass
-	return jsonify(token=token, profile=profile)
-
-  #return (token,profile)
+	users = User.query.filter_by(googleid=profile['id']).all()
+	if len(users) != 0:
+		#login existing user
+		login_user(users[0])
+		return redirect("/request_page", code=302)
+	else:
+		#create new user to add
+		user = User(profile['id'],profile['family_name'],profile['given_name'],"","",profile['email'],"")
+		db.session.add(user)
+		db.session.commit()
+		login_user(user)
+		return redirect("/more_info", code=302)
 
 @google_login.login_failure
 def login_failure(e):
@@ -111,7 +116,18 @@ def root():
     	return app.send_static_file('index.html')
     	'''
 
+@app.route('/more_info')
+@login_required
+def more_info():
+	return app.send_static_file('more_info.html')
+
+@app.route('/request_page')
+@login_required
+def request_page():
+	return "Make a Request"
+
 @app.route('/post_test/', methods=['POST'])
+@login_required
 def add_entry():
 	input_text = request.get_data().decode("utf-8") 
 	print("DATA", input_text)
@@ -124,7 +140,19 @@ def add_entry():
 	#return redirect(url_for('root'))
 	return "good"
 
+@app.route('/post_number/', methods=['POST'])
+@login_required
+def send_number_validation():
+	input_text = request.get_data().decode("utf-8") 
+	print("DATA", input_text)
+	if not isinstance(input_text, str):
+		print('bad')	
+		return "bad"
+    #USE SMOOCH TO TEXT TO NUMBER
+	return "good"
+
 @app.route('/search/<string:query>/', methods=['GET'])
+@login_required
 def search(query):
 	print(query)	
 	return json.dumps({'response': query})
