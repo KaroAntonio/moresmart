@@ -10,6 +10,8 @@ Tinder for tutoring. Get smart. More.
 	pip install Flask-Security
 	pip install Flask-OAuth2-Login
 	
+	python3 populate.py
+	
 ### Run
 
 	python3 moresmart.py

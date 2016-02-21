@@ -34,30 +34,28 @@ app.config.update(
 google_login = GoogleLogin(app)
 
 #User Model
-class User(db.Model,UserMixin):
+class User(db.Model, UserMixin):
     id = db.Column(db.Integer, primary_key=True)
     googleid = db.Column(db.String(64))
     lastname = db.Column(db.String(50))
     firstname = db.Column(db.String(50))
     contactinfo = db.Column(db.String(1024))
+    stats = db.Column(db.String(5120))
     subjects = db.Column(db.String(1024))
     pricemin = db.Column(db.Integer)
-    pricemax = db.Column(db.Integer)
     email = db.Column(db.String(100), unique=True)
     password = db.Column(db.String(100))
-    active = db.Column(db.Integer)
 
-    def __init__(self, googleid, lastname, firstname, contactinfo, subjects, email, password, active = 0, pricemin=0, pricemax=2**10):
+    def __init__(self, googleid, lastname, firstname, contactinfo, stats, subjects, pricemin, email, password):
         self.googleid = googleid
         self.lastname = lastname
         self.firstname = firstname
         self.contactinfo = contactinfo
+        self.stats = stats
         self.subjects = subjects
         self.pricemin = pricemin
-        self.pricemax = pricemax
         self.email = email
         self.password = password
-        self.active = active
 
     def __repr__(self):
         return '<User %r>' % self.email
@@ -66,14 +64,15 @@ class User(db.Model,UserMixin):
 # Subject Model
 class Subject(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    school = db.Column(db.String(1024))
-    course = db.Column(db.String(1024))
-    subject = db.Column(db.String(1024))
+    school = db.Column(db.String(64))
+    department = db.Column(db.String(16))
+    course = db.Column(db.String(64))
 
-    def __init__(self, school, course, subject):
+    def __init__(self, school, department, course):
         self.school = school
+        self.department = department
         self.course = course
-        self.subject = subject
+ 
 
     def __repr__(self):
         return '<User %r>' % self.course
@@ -96,7 +95,7 @@ def login_success(token, profile):
 		return redirect("/request_page", code=302)
 	else:
 		#create new user to add
-		user = User(profile['id'],profile['family_name'],profile['given_name'],"","",profile['email'],"")
+		user = User(profile['id'],profile['family_name'],profile['given_name'],"","","",0,profile['email'],"")
 		db.session.add(user)
 		db.session.commit()
 		login_user(user)
