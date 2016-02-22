@@ -1,5 +1,5 @@
 # More Smart
-Tinder for tutoring. Get smart. More.
+Tinder Uber for tutoring. Get smart. More.
 
 
 ### Setup
